@@ -1,0 +1,425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BookInfo">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="BookContent" Type="nvarchar(max)" />
+          <Property Name="TypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="BookType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovieInfoSet">
+          <Key>
+            <PropertyRef Name="MoiveId" />
+          </Key>
+          <Property Name="MoiveId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MoiveName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="TypeInfo_TypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="musicInfo">
+          <Key>
+            <PropertyRef Name="MusicId" />
+          </Key>
+          <Property Name="MusicId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusicTitle" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MusicTypeId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MusicType_MusicTypeId" Type="int" Nullable="false" />
+          <Property Name="MusicAuthor" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="MusicType">
+          <Key>
+            <PropertyRef Name="MusicTypeId" />
+          </Key>
+          <Property Name="MusicTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusicTypeInfo" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NewsInfo">
+          <Key>
+            <PropertyRef Name="nid" />
+          </Key>
+          <Property Name="nid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="nTid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NewsType">
+          <Key>
+            <PropertyRef Name="tid" />
+          </Key>
+          <Property Name="tid" Type="int" Nullable="false" />
+          <Property Name="tTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeInfoSet">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UName" Type="varchar" MaxLength="30" />
+          <Property Name="UPassWord" Type="nvarchar" MaxLength="6" />
+        </EntityType>
+        <Association Name="FK_BookInfo_BookInfo">
+          <End Role="BookType" Type="Self.BookType" Multiplicity="0..1" />
+          <End Role="BookInfo" Type="Self.BookInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="BookInfo">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieInfoTypeInfo">
+          <End Role="TypeInfoSet" Type="Self.TypeInfoSet" Multiplicity="1" />
+          <End Role="MovieInfoSet" Type="Self.MovieInfoSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeInfoSet">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="MovieInfoSet">
+              <PropertyRef Name="TypeInfo_TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_musicInfoMusicType">
+          <End Role="MusicType" Type="Self.MusicType" Multiplicity="1" />
+          <End Role="musicInfo" Type="Self.musicInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MusicType">
+              <PropertyRef Name="MusicTypeId" />
+            </Principal>
+            <Dependent Role="musicInfo">
+              <PropertyRef Name="MusicType_MusicTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NewsInfo_NewsType">
+          <End Role="NewsType" Type="Self.NewsType" Multiplicity="1" />
+          <End Role="NewsInfo" Type="Self.NewsInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NewsType">
+              <PropertyRef Name="tid" />
+            </Principal>
+            <Dependent Role="NewsInfo">
+              <PropertyRef Name="nTid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="testModelStoreContainer">
+          <EntitySet Name="BookInfo" EntityType="Self.BookInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookType" EntityType="Self.BookType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MovieInfoSet" EntityType="Self.MovieInfoSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="musicInfo" EntityType="Self.musicInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MusicType" EntityType="Self.MusicType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NewsInfo" EntityType="Self.NewsInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NewsType" EntityType="Self.NewsType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeInfoSet" EntityType="Self.TypeInfoSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BookInfo_BookInfo" Association="Self.FK_BookInfo_BookInfo">
+            <End Role="BookType" EntitySet="BookType" />
+            <End Role="BookInfo" EntitySet="BookInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieInfoTypeInfo" Association="Self.FK_MovieInfoTypeInfo">
+            <End Role="TypeInfoSet" EntitySet="TypeInfoSet" />
+            <End Role="MovieInfoSet" EntitySet="MovieInfoSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_musicInfoMusicType" Association="Self.FK_musicInfoMusicType">
+            <End Role="MusicType" EntitySet="MusicType" />
+            <End Role="musicInfo" EntitySet="musicInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NewsInfo_NewsType" Association="Self.FK_NewsInfo_NewsType">
+            <End Role="NewsType" EntitySet="NewsType" />
+            <End Role="NewsInfo" EntitySet="NewsInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BookInfo">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BookContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int32" />
+          <NavigationProperty Name="BookType" Relationship="Self.FK_BookInfo_BookInfo" FromRole="BookInfo" ToRole="BookType" />
+        </EntityType>
+        <EntityType Name="BookType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BookInfo" Relationship="Self.FK_BookInfo_BookInfo" FromRole="BookType" ToRole="BookInfo" />
+        </EntityType>
+        <EntityType Name="MovieInfoSet">
+          <Key>
+            <PropertyRef Name="MoiveId" />
+          </Key>
+          <Property Name="MoiveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MoiveName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="TypeInfo_TypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TypeInfoSet" Relationship="Self.FK_MovieInfoTypeInfo" FromRole="MovieInfoSet" ToRole="TypeInfoSet" />
+        </EntityType>
+        <EntityType Name="musicInfo">
+          <Key>
+            <PropertyRef Name="MusicId" />
+          </Key>
+          <Property Name="MusicId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusicTitle" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusicTypeId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusicType_MusicTypeId" Type="Int32" Nullable="false" />
+          <Property Name="MusicAuthor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MusicType" Relationship="Self.FK_musicInfoMusicType" FromRole="musicInfo" ToRole="MusicType" />
+        </EntityType>
+        <EntityType Name="MusicType">
+          <Key>
+            <PropertyRef Name="MusicTypeId" />
+          </Key>
+          <Property Name="MusicTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusicTypeInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="musicInfo" Relationship="Self.FK_musicInfoMusicType" FromRole="MusicType" ToRole="musicInfo" />
+        </EntityType>
+        <EntityType Name="NewsInfo">
+          <Key>
+            <PropertyRef Name="nid" />
+          </Key>
+          <Property Name="nid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nTid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NewsType" Relationship="Self.FK_NewsInfo_NewsType" FromRole="NewsInfo" ToRole="NewsType" />
+        </EntityType>
+        <EntityType Name="NewsType">
+          <Key>
+            <PropertyRef Name="tid" />
+          </Key>
+          <Property Name="tid" Type="Int32" Nullable="false" />
+          <Property Name="tTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="NewsInfo" Relationship="Self.FK_NewsInfo_NewsType" FromRole="NewsType" ToRole="NewsInfo" />
+        </EntityType>
+        <EntityType Name="TypeInfoSet">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MovieInfoSet" Relationship="Self.FK_MovieInfoTypeInfo" FromRole="TypeInfoSet" ToRole="MovieInfoSet" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="UPassWord" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_BookInfo_BookInfo">
+          <End Role="BookType" Type="Self.BookType" Multiplicity="0..1" />
+          <End Role="BookInfo" Type="Self.BookInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="BookInfo">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieInfoTypeInfo">
+          <End Role="TypeInfoSet" Type="Self.TypeInfoSet" Multiplicity="1" />
+          <End Role="MovieInfoSet" Type="Self.MovieInfoSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeInfoSet">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="MovieInfoSet">
+              <PropertyRef Name="TypeInfo_TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_musicInfoMusicType">
+          <End Role="MusicType" Type="Self.MusicType" Multiplicity="1" />
+          <End Role="musicInfo" Type="Self.musicInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MusicType">
+              <PropertyRef Name="MusicTypeId" />
+            </Principal>
+            <Dependent Role="musicInfo">
+              <PropertyRef Name="MusicType_MusicTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NewsInfo_NewsType">
+          <End Role="NewsType" Type="Self.NewsType" Multiplicity="1" />
+          <End Role="NewsInfo" Type="Self.NewsInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NewsType">
+              <PropertyRef Name="tid" />
+            </Principal>
+            <Dependent Role="NewsInfo">
+              <PropertyRef Name="nTid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="testEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BookInfo" EntityType="Self.BookInfo" />
+          <EntitySet Name="BookType" EntityType="Self.BookType" />
+          <EntitySet Name="MovieInfoSet" EntityType="Self.MovieInfoSet" />
+          <EntitySet Name="musicInfo" EntityType="Self.musicInfo" />
+          <EntitySet Name="MusicType" EntityType="Self.MusicType" />
+          <EntitySet Name="NewsInfo" EntityType="Self.NewsInfo" />
+          <EntitySet Name="NewsType" EntityType="Self.NewsType" />
+          <EntitySet Name="TypeInfoSet" EntityType="Self.TypeInfoSet" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" />
+          <AssociationSet Name="FK_BookInfo_BookInfo" Association="Self.FK_BookInfo_BookInfo">
+            <End Role="BookType" EntitySet="BookType" />
+            <End Role="BookInfo" EntitySet="BookInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieInfoTypeInfo" Association="Self.FK_MovieInfoTypeInfo">
+            <End Role="TypeInfoSet" EntitySet="TypeInfoSet" />
+            <End Role="MovieInfoSet" EntitySet="MovieInfoSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_musicInfoMusicType" Association="Self.FK_musicInfoMusicType">
+            <End Role="MusicType" EntitySet="MusicType" />
+            <End Role="musicInfo" EntitySet="musicInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NewsInfo_NewsType" Association="Self.FK_NewsInfo_NewsType">
+            <End Role="NewsType" EntitySet="NewsType" />
+            <End Role="NewsInfo" EntitySet="NewsInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities">
+          <EntitySetMapping Name="BookInfo">
+            <EntityTypeMapping TypeName="testModel.BookInfo">
+              <MappingFragment StoreEntitySet="BookInfo">
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="BookTitle" ColumnName="BookTitle" />
+                <ScalarProperty Name="BookContent" ColumnName="BookContent" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookType">
+            <EntityTypeMapping TypeName="testModel.BookType">
+              <MappingFragment StoreEntitySet="BookType">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeTitle" ColumnName="TypeTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieInfoSet">
+            <EntityTypeMapping TypeName="testModel.MovieInfoSet">
+              <MappingFragment StoreEntitySet="MovieInfoSet">
+                <ScalarProperty Name="MoiveId" ColumnName="MoiveId" />
+                <ScalarProperty Name="MoiveName" ColumnName="MoiveName" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeInfo_TypeId" ColumnName="TypeInfo_TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="musicInfo">
+            <EntityTypeMapping TypeName="testModel.musicInfo">
+              <MappingFragment StoreEntitySet="musicInfo">
+                <ScalarProperty Name="MusicId" ColumnName="MusicId" />
+                <ScalarProperty Name="MusicTitle" ColumnName="MusicTitle" />
+                <ScalarProperty Name="MusicTypeId" ColumnName="MusicTypeId" />
+                <ScalarProperty Name="MusicType_MusicTypeId" ColumnName="MusicType_MusicTypeId" />
+                <ScalarProperty Name="MusicAuthor" ColumnName="MusicAuthor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MusicType">
+            <EntityTypeMapping TypeName="testModel.MusicType">
+              <MappingFragment StoreEntitySet="MusicType">
+                <ScalarProperty Name="MusicTypeId" ColumnName="MusicTypeId" />
+                <ScalarProperty Name="MusicTypeInfo" ColumnName="MusicTypeInfo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewsInfo">
+            <EntityTypeMapping TypeName="testModel.NewsInfo">
+              <MappingFragment StoreEntitySet="NewsInfo">
+                <ScalarProperty Name="nid" ColumnName="nid" />
+                <ScalarProperty Name="nTitle" ColumnName="nTitle" />
+                <ScalarProperty Name="nTid" ColumnName="nTid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewsType">
+            <EntityTypeMapping TypeName="testModel.NewsType">
+              <MappingFragment StoreEntitySet="NewsType">
+                <ScalarProperty Name="tid" ColumnName="tid" />
+                <ScalarProperty Name="tTitle" ColumnName="tTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeInfoSet">
+            <EntityTypeMapping TypeName="testModel.TypeInfoSet">
+              <MappingFragment StoreEntitySet="TypeInfoSet">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfo">
+            <EntityTypeMapping TypeName="testModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="UName" ColumnName="UName" />
+                <ScalarProperty Name="UPassWord" ColumnName="UPassWord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,41 @@
+﻿@model 增删改查.Models.UserInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Update</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("Update", "UserInfo", FormMethod.Post))
+        {
+        <div>
+            ID:@Html.DisplayFor(model => model.UID)
+            @Html.HiddenFor(u => u.UID)
+        </div>
+            <div>姓名：@Html.TextBoxFor(model => model.UName)</div>
+            <div>密码：@Html.TextBoxFor(model => model.UPassWord)</div>
+            <input type="submit" value="修改" />
+        }
+        @*@using (Html.BeginForm("Update", "UserInfo", FormMethod.Post))
+        {
+            <span>编号</span>
+            @Model.UID
+            @Html.HiddenFor(u=>u.UID)
+            <br />
+            <span>姓名</span>
+            @Html.EditorFor(u=>u.UName)
+            <br />
+            <span>密码</span>
+            @Html.EditorFor(u=>u.UPassWord)
+            <br />
+            <input type="submit" value="修改" />
+         }*@
+    </div>
+</body>
+</html>
